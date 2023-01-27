@@ -17,7 +17,11 @@
 <body>
     <header>
         <h1>Dinosaurs</h1>
-        <!--<nav><a id="">All</a></nav>-->
+        <nav>
+            <a id="all" onclick="reset()">All</a>
+            <a id="carnivore" onclick="sortDinos(`carnivorous`)">Carnivore</a>
+            <a id="herbivore" onclick="sortDinos(`herbivorous`)">Herbivore</a>
+        </nav>
     </header>
     <main>
 
@@ -37,16 +41,34 @@
         Select and assign a varible to <main>
         */
 
-
-
+        let dinos=dinosaurs;
+        let main=document.querySelector("main");
         /* Exercise 9
         Use the .forEach() method to loop through each dinosaur object and show it on the page.
         Inside .forEach() create a variable to hold a template literal containing all the HTML necessary to make a div for the dinosaur information and picture. Use the same basic mark-up as you see in my-dinos.html
         Show the image, name, diet, length, period, and info for each dinosaur.
         Remember to use the += operator so the additions are cumulative.
         */
-
-
+        dinos.forEach(element => {
+            let dinoElement=document.createElement("div");
+            dinoElement.className="dinosaur";
+            let dinoContent=`
+                <div class="dino-image">
+                    <img class="dino-pic" src="./images/${element.img}">
+                </div>
+                <div class="dino-info">
+                    <p class="dino-name">${element.name}</p>
+                    <p class="dino-diet">${element.diet}</p>
+                    <p class="dino-length">${element.length}</p>
+                    <p class="dino-description">${element.info}</p>
+                    <p>Period: <span class="dino-period">${element.period}</span></p>
+                </div>
+            `
+            dinoElement.innerHTML=dinoContent;
+            // document.createElement(dinoElement);
+            main.append(dinoElement)
+        });
+        
 
 
 
@@ -55,7 +77,22 @@
 
         /*Extra credit
         Create a menu for users to sort the dinosaurs by diet: all, carnivore, herbivore. Use code similar to that which we completed for the Flying Machines, but use the diet key from the dinosaur objects to make the sorting work. */
-
+        let dinoList=document.querySelectorAll(".dinosaur");
+        //hide dino if key doesnt match diet
+        let sortDinos=(key)=>{
+            reset();
+            dinoList.forEach((dino)=>{
+                if(dino.querySelector(".dino-diet").textContent!=key){
+                    dino.classList.add("hidden");
+                }
+            });
+        }
+        //reset sorting/show all dinos
+        let reset=()=>{
+            dinoList.forEach((dino)=>{
+                dino.classList.remove("hidden");
+            });
+        }
     </script>
 </body>
 
